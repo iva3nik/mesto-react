@@ -1,0 +1,9 @@
+.card__element {
+  width: 282px;
+  height: 282px;
+  object-fit: cover;
+}
+
+.card__element:hover {
+  cursor: pointer;
+}
