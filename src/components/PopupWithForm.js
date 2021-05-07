@@ -6,8 +6,8 @@ function PopupWithForm({ title, name, children, isOpen, buttonSubmit, onClose })
       <div className="popup__container popup__container_form">
         <h2 className="popup__title">{title}</h2>
         <form
-          className={`popup__${name}`}
-          name="form-about-profile"
+          className="popup__edit-profile"
+          name={name}
           novalidate
         >
           {children}

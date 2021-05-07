@@ -1,14 +1,15 @@
 import React from 'react';
-import profileAvatar from '../images/image.jpg';
+import Card from './Card';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace,
+  userName, userDescription, userAvatar, cards }) {
 
   return (
     <>
       <section className="profile page__center">
         <div className="profile__column">
           <img
-            src={profileAvatar}
+            src={userAvatar}
             alt="Аватар профиля"
             className="profile__avatar"
           />
@@ -22,7 +23,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
 
           <div className="profile__info">
             <div className="profile__row">
-              <h1 className="profile__name">Жак-Ив Кусто</h1>
+              <h1 className="profile__name">{userName}</h1>
               <button
                 className="profile__button-edit-name"
                 type="button"
@@ -31,7 +32,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
               >
               </button>
             </div>
-            <p className="profile__text">Исследователь океана</p>
+            <p className="profile__text">{userDescription}</p>
           </div>
         </div>
 
@@ -44,6 +45,11 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
       </section>
 
       <section className="elements page__center">
+        {cards.map((card) => (
+          <Card
+            card={card}
+          ></Card>
+        ))}
       </section>
     </>
   )
