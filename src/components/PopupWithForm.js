@@ -8,7 +8,7 @@ function PopupWithForm({ title, name, children, isOpen, buttonSubmit, onClose })
         <form
           className="popup__edit-profile"
           name={name}
-          novalidate
+          noValidate
         >
           {children}
           <button className="popup__save" type="submit">{buttonSubmit}</button>

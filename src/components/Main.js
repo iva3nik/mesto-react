@@ -2,7 +2,7 @@ import React from 'react';
 import Card from './Card';
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace,
-  userName, userDescription, userAvatar, cards }) {
+  userName, userDescription, userAvatar, cards, onCardClick }) {
 
   return (
     <>
@@ -47,7 +47,9 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace,
       <section className="elements page__center">
         {cards.map((card) => (
           <Card
+            key={card._id}
             card={card}
+            onCardClick={onCardClick}
           ></Card>
         ))}
       </section>

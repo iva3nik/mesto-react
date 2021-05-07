@@ -1,5 +1,4 @@
 import React from 'react';
-import cardElement from '../images/kamchatka.jpg';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -14,22 +13,15 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isCurrentDataUser, setCurrentDataUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   React.useEffect(() => {
-    api.getDataUser()
-    .then((dataUser) => {
-      setCurrentDataUser(dataUser);
-    })
-    .catch(err => console.log(err));
-  }, [])
-
-  React.useEffect(() => {
-    api.getInitialCards()
-    .then((initialData) => {
-      setCards(initialData);
-      console.log(initialData);
-    })
-    .catch(err => console.log(err));
+    Promise.all([api.getDataUser(), api.getInitialCards()])
+      .then(([dataUser, initialData]) => {
+        setCurrentDataUser(dataUser);
+        setCards(initialData);
+      })
+      .catch(err => console.log(err));
   }, [])
 
   function handleEditAvatarClick() {
@@ -48,7 +40,12 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard(null);
   }
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  };
 
   return (
 
@@ -63,6 +60,7 @@ function App() {
           userDescription={isCurrentDataUser.about}
           userAvatar={isCurrentDataUser.avatar}
           cards={cards}
+          onCardClick={handleCardClick}
         />
         <Footer />
 
@@ -79,11 +77,11 @@ function App() {
                 type="text"
                 id="name-input"
                 className="popup__item-profile popup__item-profile_input_name"
-                value="Жак-Ив Кусто"
+                defaultValue={isCurrentDataUser.name}
                 name="name"
                 placeholder="Имя профиля"
-                minlength="2"
-                maxlength="40"
+                minLength="2"
+                maxLength="40"
                 required
               />
               <span className="popup__input-error name-input-error"></span>
@@ -93,11 +91,11 @@ function App() {
                 type="text"
                 id="about-input"
                 className="popup__item-profile popup__item-profile_input_job"
-                value="Исследователь океана"
+                defaultValue={isCurrentDataUser.about}
                 name="about"
                 placeholder="О профиле"
-                minlength="2"
-                maxlength="200"
+                minLength="2"
+                maxLength="200"
                 required
               />
               <span className="popup__input-error about-input-error"></span>
@@ -115,11 +113,11 @@ function App() {
                 type="text"
                 id="name-place-input"
                 className="popup__item-profile popup__item-profile_input_name"
-                value=""
+                defaultValue=""
                 name="name"
                 placeholder="Название"
-                minlength="2"
-                maxlength="30"
+                minLength="2"
+                maxLength="30"
                 required
               />
               <span className="popup__input-error name-place-input-error"></span>
@@ -129,7 +127,7 @@ function App() {
                 type="url"
                 id="url-input"
                 className="popup__item-profile popup__item-profile_input_job"
-                value=""
+                defaultValue=""
                 name="link"
                 placeholder="Ссылка на картинку"
                 required
@@ -156,7 +154,7 @@ function App() {
                 type="url"
                 id="url-input-avatar"
                 className="popup__item-profile popup__item-profile_input_job"
-                value=""
+                defaultValue=""
                 name="link"
                 placeholder="Ссылка на картинку"
                 required
@@ -164,29 +162,11 @@ function App() {
               <span className="popup__input-error url-input-avatar-error"></span>
             </label>
           </PopupWithForm>
-          <ImagePopup />
+          <ImagePopup
+            onClose={closeAllPopups}
+            card={selectedCard}
+          ></ImagePopup>
         </section>
-
-        <template id="card">
-        <div className="card" id="">
-          <img
-            src={cardElement}
-            alt="Камчатка"
-            className="card__element"
-          />
-          <button className="card__trash" type="button" aria-label="card-trash">
-          </button>
-          <div className="card__info">
-            <h2 className="card__title"></h2>
-            <div className="card__column-like">
-              <button className="card__like" type="button" aria-label="like-heart">
-              </button>
-              <div className="card__count">0</div>
-            </div>
-          </div>
-        </div>
-      </template>
-
       </div>
     </div>
 
