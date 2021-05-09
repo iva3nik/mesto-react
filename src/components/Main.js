@@ -2,8 +2,23 @@ import React from 'react';
 import Card from './Card';
 import api from '../utils/api';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace,
-  userName, userDescription, userAvatar, cards, onCardClick }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+
+  const [cards, setCards] = React.useState([]);
+  const [userName, setUserName] =React.useState("");
+  const [userDescription, setUserDescription] =React.useState("");
+  const [userAvatar, setUserAvatar] =React.useState("");
+
+  React.useEffect(() => {
+    Promise.all([api.getDataUser(), api.getInitialCards()])
+      .then(([dataUser, initialData]) => {
+        setUserName(dataUser.name);
+        setUserDescription(dataUser.about);
+        setUserAvatar(dataUser.avatar);
+        setCards(initialData);
+      })
+      .catch(err => console.log(err));
+  }, [])
 
   return (
     <>

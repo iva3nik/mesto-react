@@ -4,25 +4,13 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import api from '../utils/api';
 
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [currentUserData, setCurrentDataUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState(null);
-
-  React.useEffect(() => {
-    Promise.all([api.getDataUser(), api.getInitialCards()])
-      .then(([dataUser, initialData]) => {
-        setCurrentDataUser(dataUser);
-        setCards(initialData);
-      })
-      .catch(err => console.log(err));
-  }, [])
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -56,10 +44,6 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
-          userName={currentUserData.name}
-          userDescription={currentUserData.about}
-          userAvatar={currentUserData.avatar}
-          cards={cards}
           onCardClick={handleCardClick}
         />
         <Footer />
@@ -77,7 +61,6 @@ function App() {
                 type="text"
                 id="name-input"
                 className="popup__item-profile popup__item-profile_input_name"
-                defaultValue={currentUserData.name}
                 name="name"
                 placeholder="Имя профиля"
                 minLength="2"
@@ -91,7 +74,6 @@ function App() {
                 type="text"
                 id="about-input"
                 className="popup__item-profile popup__item-profile_input_job"
-                defaultValue={currentUserData.about}
                 name="about"
                 placeholder="О профиле"
                 minLength="2"
