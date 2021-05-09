@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './Card';
+import api from '../utils/api';
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace,
   userName, userDescription, userAvatar, cards, onCardClick }) {

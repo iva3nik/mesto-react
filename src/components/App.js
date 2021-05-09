@@ -11,7 +11,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isCurrentDataUser, setCurrentDataUser] = React.useState({});
+  const [currentUserData, setCurrentDataUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState(null);
 
@@ -56,9 +56,9 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
-          userName={isCurrentDataUser.name}
-          userDescription={isCurrentDataUser.about}
-          userAvatar={isCurrentDataUser.avatar}
+          userName={currentUserData.name}
+          userDescription={currentUserData.about}
+          userAvatar={currentUserData.avatar}
           cards={cards}
           onCardClick={handleCardClick}
         />
@@ -77,7 +77,7 @@ function App() {
                 type="text"
                 id="name-input"
                 className="popup__item-profile popup__item-profile_input_name"
-                defaultValue={isCurrentDataUser.name}
+                defaultValue={currentUserData.name}
                 name="name"
                 placeholder="Имя профиля"
                 minLength="2"
@@ -91,7 +91,7 @@ function App() {
                 type="text"
                 id="about-input"
                 className="popup__item-profile popup__item-profile_input_job"
-                defaultValue={isCurrentDataUser.about}
+                defaultValue={currentUserData.about}
                 name="about"
                 placeholder="О профиле"
                 minLength="2"
