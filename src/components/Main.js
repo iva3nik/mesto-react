@@ -3,7 +3,7 @@ import Card from './Card';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards, onCardLike }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -53,6 +53,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, cards }) {
             key={card._id}
             card={card}
             onCardClick={onCardClick}
+            onCardLike={onCardLike}
           ></Card>
         ))}
       </section>

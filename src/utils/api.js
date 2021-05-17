@@ -59,22 +59,6 @@ export class Api {
       .then(this._checkStatusResponse);
   }
 
-  putLikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
-      headers: this._headers
-    })
-      .then(this._checkStatusResponse);
-  }
-
-  deleteLikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-      .then(this._checkStatusResponse);
-  }
-
   renewAvatar(link) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
@@ -84,6 +68,22 @@ export class Api {
       })
     })
       .then(this._checkStatusResponse);
+  }
+
+  changeLikeCardStatus(cardId, isLiked) {
+    if(isLiked) {
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+        method: 'PUT',
+        headers: this._headers
+      })
+        .then(this._checkStatusResponse);
+    } else {
+      return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: this._headers
+      })
+        .then(this._checkStatusResponse);
+    }
   }
 }
 
