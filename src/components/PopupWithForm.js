@@ -1,6 +1,8 @@
 import React from 'react';
 
-function PopupWithForm({ title, name, children, isOpen, buttonSubmit, onClose }) {
+function PopupWithForm({ title, name, children, isOpen, buttonSubmit,
+    onClose, onSubmit }) {
+
   return (
     <div className={`popup popup_${name} ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container popup__container_form">
@@ -8,6 +10,7 @@ function PopupWithForm({ title, name, children, isOpen, buttonSubmit, onClose })
         <form
           className="popup__edit-profile"
           name={name}
+          onSubmit={onSubmit}
           noValidate
         >
           {children}
@@ -23,6 +26,7 @@ function PopupWithForm({ title, name, children, isOpen, buttonSubmit, onClose })
       </div>
     </div>
   )
+
 }
 
 export default PopupWithForm;

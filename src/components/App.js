@@ -4,6 +4,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -45,7 +46,7 @@ function App() {
         })
         .catch((err) => console.log(err))
     };
-  };
+  }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -70,6 +71,15 @@ function App() {
     setSelectedCard(card);
   };
 
+  function handleUpdateUser(data) {
+    api.patchDataUser(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
 
     <CurrentUserContext.Provider value={currentUser}>
@@ -88,40 +98,11 @@ function App() {
           <Footer />
 
           <section className="popups">
-            <PopupWithForm
-              name="edit-profile"
-              title="Редактировать профиль"
-              buttonSubmit="Сохранить"
+            <EditProfilePopup
               isOpen={isEditProfilePopupOpen}
               onClose={closeAllPopups}
-            >
-              <label className="popup__field">
-                <input
-                  type="text"
-                  id="name-input"
-                  className="popup__item-profile popup__item-profile_input_name"
-                  name="name"
-                  placeholder="Имя профиля"
-                  minLength="2"
-                  maxLength="40"
-                  required
-                />
-                <span className="popup__input-error name-input-error"></span>
-              </label>
-              <label className="popup__field">
-                <input
-                  type="text"
-                  id="about-input"
-                  className="popup__item-profile popup__item-profile_input_job"
-                  name="about"
-                  placeholder="О профиле"
-                  minLength="2"
-                  maxLength="200"
-                  required
-                />
-                <span className="popup__input-error about-input-error"></span>
-              </label>
-            </PopupWithForm>
+              onUpdateUser={handleUpdateUser}
+            />
             <PopupWithForm
               name="add-card"
               title="Новое место"
