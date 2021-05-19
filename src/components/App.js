@@ -5,8 +5,10 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
 
 function App() {
 
@@ -80,6 +82,15 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  function handleUpdateAvatar(data) {
+    api.renewAvatar(data.avatar)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
 
     <CurrentUserContext.Provider value={currentUser}>
@@ -144,26 +155,11 @@ function App() {
               onClose={closeAllPopups}
             >
             </PopupWithForm>
-            <PopupWithForm
-              name="update-avatar"
-              title="Обновить аватар"
-              buttonSubmit="Сохранить"
+            <EditAvatarPopup
               isOpen={isEditAvatarPopupOpen}
               onClose={closeAllPopups}
-            >
-              <label className="popup__field">
-                <input
-                  type="url"
-                  id="url-input-avatar"
-                  className="popup__item-profile popup__item-profile_input_job"
-                  defaultValue=""
-                  name="link"
-                  placeholder="Ссылка на картинку"
-                  required
-                />
-                <span className="popup__input-error url-input-avatar-error"></span>
-              </label>
-            </PopupWithForm>
+              onUpdateAvatar={handleUpdateAvatar}
+            />
             <ImagePopup
               onClose={closeAllPopups}
               card={selectedCard}
