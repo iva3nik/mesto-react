@@ -6,6 +6,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -91,6 +92,16 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  function handleAddPlace(data) {
+    console.log(data)
+    api.addNewCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
 
     <CurrentUserContext.Provider value={currentUser}>
@@ -114,40 +125,11 @@ function App() {
               onClose={closeAllPopups}
               onUpdateUser={handleUpdateUser}
             />
-            <PopupWithForm
-              name="add-card"
-              title="Новое место"
-              buttonSubmit="Создать"
+            <AddPlacePopup
               isOpen={isAddPlacePopupOpen}
               onClose={closeAllPopups}
-            >
-              <label className="popup__field">
-                <input
-                  type="text"
-                  id="name-place-input"
-                  className="popup__item-profile popup__item-profile_input_name"
-                  defaultValue=""
-                  name="name"
-                  placeholder="Название"
-                  minLength="2"
-                  maxLength="30"
-                  required
-                />
-                <span className="popup__input-error name-place-input-error"></span>
-              </label>
-              <label className="popup__field">
-                <input
-                  type="url"
-                  id="url-input"
-                  className="popup__item-profile popup__item-profile_input_job"
-                  defaultValue=""
-                  name="link"
-                  placeholder="Ссылка на картинку"
-                  required
-                />
-                <span className="popup__input-error url-input-error"></span>
-              </label>
-            </PopupWithForm>
+              onAddPlace={handleAddPlace}
+            />
             <PopupWithForm
               name="confirm"
               title="Вы уверены?"
