@@ -93,7 +93,6 @@ function App() {
   };
 
   function handleAddPlace(data) {
-    console.log(data)
     api.addNewCard(data)
       .then((newCard) => {
         setCards([newCard, ...cards]);
