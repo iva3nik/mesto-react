@@ -1,7 +1,7 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
 
   const [name, setName] = React.useState("");
   const [link, setLink] = React.useState("");
@@ -14,12 +14,18 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     setLink(e.target.value);
   }
 
+  function handleClear() {
+    setName("");
+    setLink("");
+  }
+
   function handleAddPlaceSubmit(e) {
     e.preventDefault();
     onAddPlace({
       name,
       link
     });
+    handleClear();
   };
 
   return(
@@ -27,9 +33,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       name="add-card"
       title="Новое место"
       buttonSubmit="Создать"
+      buttonSubmitLoading="Создание..."
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleAddPlaceSubmit}
+      isLoading={isLoading}
     >
       <label className="popup__field">
         <input
