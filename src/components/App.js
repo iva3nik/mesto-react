@@ -86,23 +86,25 @@ function App() {
       .finally(() => setIsLoading(false));
   };
 
-  function handleUpdateAvatar(data) {
+  function handleUpdateAvatar(data, handleClear) {
     setIsLoading(true);
     api.renewAvatar(data.avatar)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
+        handleClear();
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   };
 
-  function handleAddPlace(data) {
+  function handleAddPlace(data, handleClear) {
     setIsLoading(true);
     api.addNewCard(data)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
+        handleClear();
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));

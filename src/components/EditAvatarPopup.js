@@ -10,7 +10,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar,isLoading }) {
 
     onUpdateAvatar({
       avatar: linkRef.current.value,
-    });
+    }, () => {linkRef.current.value = ""});
   }
 
   return(
