@@ -1,4 +1,4 @@
-# Проект : Место-React (Реализован на React)
+# Проект : Место-React
 
 # Ссылка на проект
 https://iva3nik.github.io/mesto-react/
