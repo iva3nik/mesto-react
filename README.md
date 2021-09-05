@@ -1,5 +1,7 @@
 # Проект : Место-React
 
+Cтек: JavaScript / React.js / HTML / CSS / Git / Figma
+
 # Ссылка на проект
 https://iva3nik.github.io/mesto-react/
 
